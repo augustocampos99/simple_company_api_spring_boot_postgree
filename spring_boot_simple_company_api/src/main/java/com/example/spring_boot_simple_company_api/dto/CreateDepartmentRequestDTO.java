@@ -1,12 +1,14 @@
 package com.example.spring_boot_simple_company_api.dto;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class CreateDepartmentRequestDTO {
-    @Column(name = "name")
+    @NotEmpty(message = "The name is required.")
+    @Size(min = 2, max = 100, message = "The length of name must be between 2 and 100 characters.")
     private String name;
 
-    @Column(name = "description")
     private String description;
 
     public String getName() {
