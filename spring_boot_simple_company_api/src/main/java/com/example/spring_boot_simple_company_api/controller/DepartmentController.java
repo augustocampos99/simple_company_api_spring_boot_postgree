@@ -27,7 +27,7 @@ public class DepartmentController {
             return new ResponseEntity(result.getResult(), HttpStatus.OK);
         }
         catch(Exception e) {
-            return new ResponseEntity("", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Contact the IT department...", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -42,29 +42,33 @@ public class DepartmentController {
             return new ResponseEntity(result.getResult(), HttpStatus.OK);
         }
         catch(Exception e) {
-            return new ResponseEntity("", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Contact the IT department...", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping({ "", "/" })
     public ResponseEntity<Department> create(@Valid @RequestBody CreateDepartmentRequestDTO request) {
         try {
-            var result = this.departmentService.create(request);
+            var result = this.departmentService.create(request.toDepartment());
             return new ResponseEntity(result.getResult(), HttpStatus.CREATED);
         }
         catch(Exception e) {
-            return new ResponseEntity("", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Contact the IT department...", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Department> update(@PathVariable int id, @Valid @RequestBody CreateDepartmentRequestDTO request) {
         try {
-            var result = this.departmentService.update(id, request);
+            var result = this.departmentService.update(id, request.toDepartment());
+            if(result == null) {
+                return new ResponseEntity("", HttpStatus.NOT_FOUND);
+            }
+
             return new ResponseEntity(result.getResult(), HttpStatus.OK);
         }
         catch(Exception e) {
-            return new ResponseEntity("", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Contact the IT department...", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -75,7 +79,7 @@ public class DepartmentController {
             return new ResponseEntity("OK", HttpStatus.OK);
         }
         catch(Exception e) {
-            return new ResponseEntity("", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Contact the IT department...", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

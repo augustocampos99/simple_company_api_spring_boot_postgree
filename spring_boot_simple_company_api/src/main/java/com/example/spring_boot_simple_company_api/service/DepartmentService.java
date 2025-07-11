@@ -19,6 +19,10 @@ public class DepartmentService {
 
     public BaseResult<List<Department>> getAllPagination(int page, int limit) throws Exception {
         try {
+            if(limit > 100) {
+                limit = 100;
+            }
+
             var result = this.departmentRepository.GetAllPagination(PageRequest.of(page, limit));
             return new BaseResult<List<Department>>(true, result, "");
         }
@@ -41,9 +45,8 @@ public class DepartmentService {
         }
     }
 
-    public BaseResult<Department> create(CreateDepartmentRequestDTO dto) throws Exception {
+    public BaseResult<Department> create(Department department) throws Exception {
         try {
-            var department = new Department(0, dto.getName(), dto.getDescription());
             this.departmentRepository.save(department);
             return new BaseResult<Department>(true, department, "");
         }
@@ -52,19 +55,19 @@ public class DepartmentService {
         }
     }
 
-    public BaseResult<Department> update(int id, CreateDepartmentRequestDTO dto) throws Exception {
+    public BaseResult<Department> update(int id, Department department) throws Exception {
         try {
             var result = this.departmentRepository.findById(id);
             if(result.isEmpty()) {
                 return null;
             }
 
-            var department = result.get();
-            department.setName(dto.getName());
-            department.setDescription(dto.getDescription());
-            this.departmentRepository.save(department);
+            var departmentResult = result.get();
+            departmentResult.setName(department.getName());
+            departmentResult.setDescription(department.getDescription());
+            this.departmentRepository.save(departmentResult);
 
-            return new BaseResult<Department>(true, department, "");
+            return new BaseResult<Department>(true, departmentResult, "");
         }
         catch(Exception e) {
             throw new Exception("Error database: " + e.getMessage());

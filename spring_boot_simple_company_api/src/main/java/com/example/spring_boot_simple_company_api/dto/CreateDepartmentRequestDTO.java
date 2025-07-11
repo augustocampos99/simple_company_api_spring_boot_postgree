@@ -1,5 +1,6 @@
 package com.example.spring_boot_simple_company_api.dto;
 
+import com.example.spring_boot_simple_company_api.entity.Department;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -30,5 +31,9 @@ public class CreateDepartmentRequestDTO {
     public CreateDepartmentRequestDTO(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Department toDepartment() {
+        return new Department(0, this.getName(), this.getDescription());
     }
 }
