@@ -23,7 +23,7 @@ public class DepartmentService {
                 limit = 100;
             }
 
-            var result = this.departmentRepository.GetAllPagination(PageRequest.of(page, limit));
+            var result = this.departmentRepository.findAllPagination(PageRequest.of(page, limit));
             return new BaseResult<List<Department>>(true, result, "");
         }
         catch(Exception e) {

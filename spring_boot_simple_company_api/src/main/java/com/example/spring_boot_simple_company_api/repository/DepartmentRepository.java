@@ -12,6 +12,6 @@ import java.util.List;
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 
     @Query("SELECT d FROM Department d ORDER BY d.id ASC")
-    List<Department> GetAllPagination(Pageable pagination);
+    List<Department> findAllPagination(Pageable pagination);
 
 }
